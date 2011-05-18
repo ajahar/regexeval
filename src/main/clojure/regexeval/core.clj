@@ -17,20 +17,27 @@
 (ns regexeval.core
   "A simple regular expression tester application"
   (:gen-class)
-  (:import (javax.swing JFrame JPanel JLabel JButton)
+  (:import (javax.swing JFrame JPanel JLabel JButton JTextArea)
            (java.awt.event ActionListener)))
 
-(def dummy-text "Hello world. I don't work yet.")
+(def label (JLabel. "Hello world."))
+
+(def regex-input (JTextArea. "Write your expression here"))
+
+(def matched-text (JTextArea. "Text to match"))
 
 (def match-action (proxy [ActionListener] []
   (actionPerformed [e]
-    (println "action"))))
+    (.setText label
+      (re-matches (re-pattern (.getText regex-input)) (.getText regex-input))))))
 
 (def match-button (doto (JButton. "match")
   (.addActionListener match-action)))
 
 (def pane (doto (JPanel.)
-  (.add (JLabel. dummy-text))
+  (.add regex-input)
+  (.add matched-text)
+  (.add label)
   (.add match-button)))
 
 (defn make-frame []
