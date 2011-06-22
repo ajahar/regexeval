@@ -26,10 +26,16 @@
 
 (def matched-text (JTextArea. "Text to match"))
 
+(defn make-matcher []
+  "Create a Matcher from user inputs"
+  (re-matcher (re-pattern (.getText regex-input)) (.getText matched-text)))
+
 (def match-action (proxy [ActionListener] []
   (actionPerformed [e]
-    (.setText label
-      (re-matches (re-pattern (.getText regex-input)) (.getText regex-input))))))
+    (let [matcher (make-matcher)]
+      (if (.find matcher)
+        (.setText label "matches")
+        (.setText label "does not match"))))))
 
 (def match-button (doto (JButton. "match")
   (.addActionListener match-action)))
