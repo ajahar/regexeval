@@ -32,10 +32,9 @@
 
 (def match-action (proxy [ActionListener] []
   (actionPerformed [e]
-    (let [matcher (make-matcher)]
-      (if (.find matcher)
+      (if (.find (make-matcher))
         (.setText label "matches")
-        (.setText label "does not match"))))))
+        (.setText label "does not match")))))
 
 (def match-button (doto (JButton. "match")
   (.addActionListener match-action)))
