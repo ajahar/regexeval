@@ -17,41 +17,34 @@
 (ns regexeval.core
   "A simple regular expression tester application"
   (:gen-class)
+  (:use seesaw.core)
   (:import (javax.swing JFrame JPanel JLabel JButton JTextArea)
            (java.awt.event ActionListener)))
 
-(def label (JLabel. "Hello world."))
+(def result-label (label :text "Hello world."))
 
-(def regex-input (JTextArea. "Write your expression here"))
+(def regex-input (text :text "Write your expression here"))
 
-(def matched-text (JTextArea. "Text to match"))
+(def matched-text (text :text "Text to match"))
 
 (defn make-matcher []
   "Create a Matcher from user inputs"
   (re-matcher (re-pattern (.getText regex-input)) (.getText matched-text)))
 
-(def match-action (proxy [ActionListener] []
-  (actionPerformed [e]
-      (if (.find (make-matcher))
-        (.setText label "matches")
-        (.setText label "does not match")))))
+(def match-action
+  (action :name "match"
+          :handler (fn [e]
+            (if (.find (make-matcher))
+              (text! result-label "matches")
+              (text! result-label "does not match")))))
 
-(def match-button (doto (JButton. "match")
-  (.addActionListener match-action)))
-
-(def pane (doto (JPanel.)
-  (.add regex-input)
-  (.add matched-text)
-  (.add label)
-  (.add match-button)))
+(def pane (vertical-panel
+  :items [regex-input matched-text result-label match-action ]))
 
 (defn make-frame []
-  (let[frame (JFrame. "RegExEval")]
-    (doto frame
-      (.add pane)
-      (.setDefaultCloseOperation JFrame/EXIT_ON_CLOSE)
-      (.setSize 640 480)
-      (.setVisible true))))
+  (frame :title "RegExEval" :width 640 :height 480
+    :content pane
+    :on-close :exit))
 
 (defn -main [& args]
-  (make-frame))
+  (invoke-later (show! (make-frame))))
