@@ -6,4 +6,4 @@
   (is false "No tests have been written."))
   
 (deftest dummy-test []
-  (is (= (re-find #"Hello" (.getText label)) "Hello")))
+  (is (= (re-find #"Hello" (.getText result-label)) "Hello")))
