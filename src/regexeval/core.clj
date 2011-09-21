@@ -17,9 +17,7 @@
 (ns regexeval.core
   "A simple regular expression tester application"
   (:gen-class)
-  (:use seesaw.core)
-  (:import (javax.swing JFrame JPanel JLabel JButton JTextArea)
-           (java.awt.event ActionListener)))
+  (:use seesaw.core))
 
 (def result-label (label :text "Hello world."))
 
@@ -34,12 +32,12 @@
 (def match-action
   (action :name "match"
           :handler (fn [e]
-            (if (.find (make-matcher))
-              (text! result-label "matches")
-              (text! result-label "does not match")))))
+                     (if (.find (make-matcher))
+                       (text! result-label "matches")
+                       (text! result-label "does not match")))))
 
 (def pane (vertical-panel
-  :items [regex-input matched-text result-label match-action ]))
+            :items [regex-input matched-text result-label match-action ]))
 
 (defn make-frame []
   (frame :title "RegExEval" :width 640 :height 480
