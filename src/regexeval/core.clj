@@ -42,8 +42,12 @@
   (action :name "match"
           :handler (fn [e] (handle-match))))
 
+(def replace-action
+  (action :name "replace"
+          :handler (fn [e] (text! result-label "FAIL: not implemented"))))
+
 (def pane (vertical-panel
-            :items [test-regex matched-text result-label match-action ]))
+            :items [test-regex matched-text result-label match-action replace-action]))
 
 (defn make-frame []
   (frame :title "RegExEval" :width 640 :height 480
