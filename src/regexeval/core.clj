@@ -25,13 +25,13 @@
 
 (def matched-text (text :text "Text to match"))
 
-(defn make-matcher []
+(defn make-matcher [pattern-input text-input]
   "Create a Matcher from user inputs"
-  (re-matcher (re-pattern (.getText regex-input)) (.getText matched-text)))
+  (re-matcher (re-pattern (.getText pattern-input)) (.getText text-input)))
 
 (defn match? []
-  "Find using users pattern from supplied text"
-  (.find (make-matcher)))
+  "Find a match using users pattern from supplied text"
+  (.find (make-matcher regex-input matched-text)))
 
 (def match-action
   (action :name "match"
