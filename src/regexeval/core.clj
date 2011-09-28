@@ -29,14 +29,14 @@
   "Create a Matcher from user inputs"
   (re-matcher (re-pattern (.getText regex-input)) (.getText matched-text)))
 
-(defn matches? []
+(defn match? []
   "Find using users pattern from supplied text"
   (.find (make-matcher))
 
 (def match-action
   (action :name "match"
           :handler (fn [e]
-                     (if matches?)
+                     (if match?)
                        (text! result-label "matches")
                        (text! result-label "does not match")))))
 
