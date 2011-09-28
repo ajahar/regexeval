@@ -31,12 +31,12 @@
 
 (defn match? []
   "Find using users pattern from supplied text"
-  (.find (make-matcher))
+  (.find (make-matcher)))
 
 (def match-action
   (action :name "match"
           :handler (fn [e]
-                     (if match?)
+                     (if (match?)
                        (text! result-label "matches")
                        (text! result-label "does not match")))))
 
