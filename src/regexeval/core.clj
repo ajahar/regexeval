@@ -17,31 +17,33 @@
 (ns regexeval.core
   "A simple regular expression tester application"
   (:gen-class)
-  (:use seesaw.core))
+  (:use seesaw.core)
+  (:import java.util.regex.PatternSyntaxException))
 
-(def result-label (label :text "Hello world."))
+(def result-label (label :text "Match result"))
 
-(def regex-input (text :text "Write your expression here"))
+(def test-regex (text :text "Write your expression here"))
 
 (def matched-text (text :text "Text to match"))
 
-(defn make-matcher [pattern-input text-input]
-  "Create a Matcher from user inputs"
-  (re-matcher (re-pattern (.getText pattern-input)) (.getText text-input)))
+(defn matches? [pattern-input text-input]
+  "Match regex pattern to text"
+  (.matches (.getText test-regex) (.getText matched-text)))
 
-(defn match? []
-  "Find a match using users pattern from supplied text"
-  (.find (make-matcher regex-input matched-text)))
+(defn handle-match []
+  (try
+    (if (matches? test-regex matched-text)
+      (text! result-label "matches")
+      (text! result-label "does not match"))
+    (catch PatternSyntaxException ex
+      (text! result-label (str "You have an error in your regular expression:" (.getDescription ex))))))
 
 (def match-action
   (action :name "match"
-          :handler (fn [e]
-                     (if (match?)
-                       (text! result-label "matches")
-                       (text! result-label "does not match")))))
+          :handler (fn [e] (handle-match))))
 
 (def pane (vertical-panel
-            :items [regex-input matched-text result-label match-action ]))
+            :items [test-regex matched-text result-label match-action ]))
 
 (defn make-frame []
   (frame :title "RegExEval" :width 640 :height 480

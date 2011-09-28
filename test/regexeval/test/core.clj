@@ -2,6 +2,6 @@
   (:use regexeval.core seesaw.core clojure.test))
 
 (deftest should-match-same-values []
-  (text! regex-input "abc")
+  (text! test-regex "abc")
   (text! matched-text "abc")
-  (is (match?)))
+  (is (matches? test-regex matched-text)))
