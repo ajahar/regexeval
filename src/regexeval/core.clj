@@ -1,5 +1,5 @@
 ; RegExEval
-; Copyright (C) 2011  Antti Harju
+; Copyright (C) 2011-2012  Antti Harju
 ;
 ; This program is free software: you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
