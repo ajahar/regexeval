@@ -30,7 +30,7 @@
   "Match regex pattern to text"
   (.matches (.getText test-regex) (.getText matched-text)))
 
-(defn handle-match []
+(defn handle-match! []
   (try
     (if (matches? test-regex matched-text)
       (text! result-label "matches")
@@ -40,7 +40,7 @@
 
 (def match-action
   (action :name "match"
-          :handler (fn [e] (handle-match))))
+          :handler (fn [e] (handle-match!))))
 
 (def replace-action
   (action :name "replace"
