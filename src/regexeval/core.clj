@@ -26,8 +26,9 @@
 
 (def matched-text (text :text "Text to match"))
 
-(defn matches? [pattern-input text-input]
+(defn matches?
   "Match regex pattern to text"
+  [pattern-input text-input]
   (.matches (.getText test-regex) (.getText matched-text)))
 
 (defn handle-match! []
