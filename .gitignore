@@ -1,7 +1,8 @@
 pom.xml
 *jar
-/lib/
-/classes/
+lib/
+classes/
+target/
 .lein-failures
 .lein-deps-sum
 .idea/
